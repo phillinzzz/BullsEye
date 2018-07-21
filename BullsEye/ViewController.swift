@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startNewRound()
+        startOver()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -38,21 +38,34 @@ class ViewController: UIViewController {
 //            difference = -difference
 //        }
         let difference = abs(currentValue - targetValue)
-        let points = 100 - difference
+        var points = 100 - difference
+        
+        let title: String
+        if difference == 0 {
+            title = "Perfect!"
+            points += 100
+        } else if difference < 5 {
+            title = "You almost did it!"
+            if difference == 1 {
+                points += 50
+            }
+        } else if difference < 10 {
+            title = "Pretty good!"
+        } else {
+            title = "Not even close..."
+        }
+        
         score += points
         
-        let message = "The value of the slider is: \(currentValue)" +
-                        "\nThe target value is: \(targetValue)" +
-                        "\nThe difference is: \(difference)" +
-                        "\nYou scored \(points) points"
-        let alert = UIAlertController(title: "Hello, world!", message: message, preferredStyle: .alert)
+        let message = "You scored \(points) points"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let action = UIAlertAction(title: "OK", style: .default, handler: { action in self.startNewRound()})
         
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-        startNewRound()
+//        startNewRound()
     
     }
     
