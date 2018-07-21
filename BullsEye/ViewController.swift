@@ -61,6 +61,12 @@ class ViewController: UIViewController {
         currentValue = lroundf(slider.value)
     }
     
+    @IBAction func startOver() {
+        rounds = 0
+        score = 0
+        startNewRound()
+    }
+    
     func startNewRound() {
         
         currentValue = 50
