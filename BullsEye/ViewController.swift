@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class ViewController: UIViewController {
 
@@ -23,6 +24,20 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let thumbImageNormal = #imageLiteral(resourceName: "SliderThumb-Normal")
+        let thumbImageHighlighted = #imageLiteral(resourceName: "SliderThumb-Highlighted")
+        let insets = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+        let trackLeftImage = #imageLiteral(resourceName: "SliderTrackLeft")
+        let trackLeftResizable = trackLeftImage.resizableImage(withCapInsets: insets)
+        let trackRightImage = #imageLiteral(resourceName: "SliderTrackRight")
+        let trackRightResizable = trackRightImage.resizableImage(withCapInsets: insets)
+        
+        slider.setThumbImage(thumbImageNormal, for: .normal)
+        slider.setThumbImage(thumbImageHighlighted, for: .highlighted)
+        slider.setMinimumTrackImage(trackLeftResizable, for: .normal)
+        slider.setMaximumTrackImage(trackRightResizable, for: .normal)
+        
+        
         startOver()
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -78,6 +93,12 @@ class ViewController: UIViewController {
         rounds = 0
         score = 0
         startNewRound()
+//        sleep(10)
+        let transition = CATransition()
+        transition.type = kCATransitionFade
+        transition.duration = 1
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        view.layer.add(transition, forKey: nil)
     }
     
     func startNewRound() {
